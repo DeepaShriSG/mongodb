@@ -1,0 +1,84 @@
+use users;
+
+db.users.updateOne(
+   { name: "John Doe" }, 
+   { $set: { age: 30 } },
+   { upsert: true }       
+);
+
+
+
+db.users.insertMany([
+   { name: "Alice", age: 25 },
+   { name: "Bob", age: 28 },
+   { name: "Charlie", age: 32 }
+]);
+
+
+db.users.findOne({ name: "Alice" });
+
+
+db.users.find({ age: { $gt: 25 } });
+
+
+Operators=> 
+
+$gt (Greater Than)
+db.users.find({ age: { $gt: 25 } });
+
+$lt (Less Than)
+db.users.find({ age: { $lt: 25 } });
+
+$gte (Greater Than or Equal)
+db.users.find({ age: { $gte: 18 } });
+
+$lte (Less Than or Equal)
+db.users.find({ age: { $lte: 30 } });
+
+$eq (Equal)
+db.users.find({ name: { $eq: "Alice" } });
+
+$ne (Not Equal)
+db.users.find({ age: { $ne: 25 } });
+
+
+updateOne 
+db.users.updateOne(
+   { name: "Alice" },       
+   { $set: { age: 30 } }   
+);
+
+updateMany 
+db.users.updateMany(
+   { role: "user" },       
+   { $set: { active: true } } 
+);
+
+deleteOne Syntax
+db.users.deleteOne({ name: "Alice" });
+
+deleteMany
+db.users.deleteMany({ role: "inactive" });
+
+
+
+Aggregate =>
+
+db.orders.aggregate([
+   { $match: { status: "shipped" } },
+   { $sort: { date: -1 } },
+   { $limit: 5 }
+]);
+
+//count
+db.orders.aggregate([
+   { $match: { status: "shipped" } },
+   { $count: "totalOrders" }
+]);
+
+//limit
+db.orders.aggregate([
+   { $match: { status: "shipped" } },
+   { $sort: { date: -1 } },
+   { $limit: 10 }
+]);
